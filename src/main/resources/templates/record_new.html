@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add new record</title>
+</head>
+<body>
+  <h1>New record</h1>
+  <form action="/patient/saveRecord">
+    <label for="systolicBloodPressure">systolic blood pressure</label><br/>
+    <input type="number" id="systolicBloodPressure" name="systolicBloodPressure" placeholder="sys"><br/>
+    <label for="diastolicBloodPressure">diastolic blood pressure</label><br/>
+    <input type="number" id="diastolicBloodPressure" name="diastolicBloodPressure" placeholder="dia"><br/>
+    <label for="heartRate">heart rate</label><br/>
+    <input type="number" id="heartRate" name="heartRate" placeholder="hr"><br/>
+    <label for="shortDescription">short description</label><br/>
+    <textarea type="text" id="shortDescription" name="shortDescription" placeholder="description"></textarea><br/><br/>
+    <button type="submit">Save Record</button><br/>
+  </form>
+</body>
+</html>

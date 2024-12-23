@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Record detail</h1>
+    <label>Date : </label><label th:text="${record.date}"></label><br/><br/>
+    <label>Systolic Blood Pressure</label><label th:text="${record.systolicBloodPressure}"></label><br/><br/>
+    <label>Diastolic Blood Pressure</label><label th:text="${record.diastolicBloodPressure}"></label><br/><br/>
+    <label>Heart Rate</label><label th:text="${record.heartRate}"></label><br/><br/>
+    <label>Description</label><label th:text="${record.shortDescription}"></label><br/><br/>
+</body>
+</html>
