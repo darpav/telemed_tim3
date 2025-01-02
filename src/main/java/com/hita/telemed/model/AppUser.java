@@ -2,51 +2,84 @@ package com.hita.telemed.model;
 
 public class AppUser {
 
-    private Long apUserId;
+    private static int counterId = 0;
 
-    private String userEmail;
-    private String userPassword;
+    private int appUserId;
 
+    private String firstName;
+    private String lastName;
+
+    private String appUserEmail;
+    private String appUserPassword;
+
+    private Role role;
 
     public AppUser() {
+        this.appUserId = counterId++;
     }
 
-    public AppUser(Long apUserId, String userEmail, String userPassword) {
-        this.apUserId = apUserId;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+    public AppUser(String firstName, String lastName, String appUserEmail, String appUserPassword, Role role) {
+        this.appUserId = counterId++;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.appUserEmail = appUserEmail;
+        this.appUserPassword = appUserPassword;
+        this.role = role;
     }
 
-    public Long getApUserId() {
-        return apUserId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setApUserId(Long apUserId) {
-        this.apUserId = apUserId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public int getAppUserId() {
+        return appUserId;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+    public String getAppUserEmail() {
+        return appUserEmail;
+    }
+
+    public void setAppUserEmail(String appUserEmail) {
+        this.appUserEmail = appUserEmail;
+    }
+
+    public String getAppUserPassword() {
+        return appUserPassword;
+    }
+
+    public void setAppUserPassword(String appUserPassword) {
+        this.appUserPassword = appUserPassword;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
         return "AppUser{" +
-                "apUserId=" + apUserId +
-                ", userEmail='" + userEmail + '\'' +
-                ", userPassword='" + userPassword +
+                "appUserId=" + appUserId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", appUserEmail='" + appUserEmail + '\'' +
+                ", appUserPassword='" + appUserPassword + '\'' +
+                ", role=" + role +
                 '}';
     }
 }

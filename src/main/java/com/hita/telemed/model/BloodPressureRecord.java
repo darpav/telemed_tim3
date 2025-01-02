@@ -1,10 +1,15 @@
 package com.hita.telemed.model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class BloodPressureRecord {
 
-    private Long recordId;
+    private static int counterId = 0;
 
-    private String date;
+    private int recordId;
+
+    private LocalDateTime date;
 
     private int systolicBloodPressure;      // mmHg
     private int diastolicBloodPressure;     // mmHg
@@ -12,26 +17,22 @@ public class BloodPressureRecord {
 
     private String shortDescription;
 
-    // private AppUser appUser;
+    private AppUser patient;
 
-    public BloodPressureRecord () {
+    public BloodPressureRecord() {
+        this.recordId = counterId++;
     }
 
-    public BloodPressureRecord (Long recordId, String date, int systolicBloodPressure, int diastolicBloodPressure, int heartRate, String shortDescription) {
-        this.recordId = recordId;
-        this.systolicBloodPressure = systolicBloodPressure;
-        this.diastolicBloodPressure = diastolicBloodPressure;
-        this.heartRate = heartRate;
-        this.shortDescription = shortDescription;
-        this.date = date;
-    }
-
-    public Long getRecordId() {
+    public int getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(Long recordId) {
-        this.recordId = recordId;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     public int getSystolicBloodPressure() {
@@ -66,22 +67,28 @@ public class BloodPressureRecord {
         this.shortDescription = shortDescription;
     }
 
-    public String getDate() {
-        return date;
+    public AppUser getPatient() {
+        return patient;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setPatient(AppUser patient) {
+        this.patient = patient;
+    }
+
+    public String getFormattedDate() {
+        return date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
     }
 
     @Override
     public String toString() {
         return "BloodPressureRecord{" +
                 "recordId=" + recordId +
+                ", date=" + date +
                 ", systolicBloodPressure=" + systolicBloodPressure +
                 ", diastolicBloodPressure=" + diastolicBloodPressure +
                 ", heartRate=" + heartRate +
                 ", shortDescription='" + shortDescription + '\'' +
+                ", patient=" + patient +
                 '}';
     }
 }
