@@ -1,58 +1,22 @@
 package com.hita.telemed.repository;
 
+import com.hita.telemed.model.AppUser;
 import com.hita.telemed.model.BloodPressureRecord;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class BloodPressureRecordRepository {
+public interface BloodPressureRecordRepository extends JpaRepository<BloodPressureRecord, Long> {
 
-    private List<BloodPressureRecord> bloodPressureRecords;
+    public List<BloodPressureRecord> findBloodPressureRecordsByPatient_AppUserId(Long patientId);
 
-    public BloodPressureRecordRepository() {
-        this.bloodPressureRecords = new ArrayList<>();
-    }
+    public List<BloodPressureRecord> findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(Long patientId);
 
-    public List<BloodPressureRecord> getAllBloodPressureRecords() {
-        return bloodPressureRecords;
-    }
-
-    public BloodPressureRecord getBloodPressureRecordById(int recordId) {
-        for (BloodPressureRecord bloodPressureRecord : bloodPressureRecords) {
-            if (bloodPressureRecord.getRecordId() == recordId) {
-                return bloodPressureRecord;
-            }
-        }
-        return null;
-    }
-
-    public List<BloodPressureRecord> getBloodPressureRecordsByPatientId(int appUserId) {
-        List<BloodPressureRecord> patientBloodPressureRecords = new ArrayList<>();
-        for (BloodPressureRecord bloodPressureRecord : bloodPressureRecords) {
-            if (bloodPressureRecord.getPatient().getAppUserId() == appUserId) {
-                patientBloodPressureRecords.add(bloodPressureRecord);
-            }
-        }
-        return patientBloodPressureRecords;
-    }
-
-    public void saveBloodPressureRecord(BloodPressureRecord bloodPressureRecord) {
-        bloodPressureRecords.add(bloodPressureRecord);
-    }
-
-    public void updateRecord(BloodPressureRecord record) {
-        BloodPressureRecord recordToUpdate = getBloodPressureRecordById(record.getRecordId());
-        recordToUpdate.setDate(record.getDate());
-        recordToUpdate.setSystolicBloodPressure(record.getSystolicBloodPressure());
-        recordToUpdate.setDiastolicBloodPressure(record.getDiastolicBloodPressure());
-        recordToUpdate.setHeartRate(record.getHeartRate());
-        recordToUpdate.setShortDescription(record.getShortDescription());
-        recordToUpdate.setPatient(record.getPatient());
-    }
-
-    public void deleteRecord(BloodPressureRecord record) {
-        bloodPressureRecords.remove(record);
-    }
+    @Query("SELECT b FROM BloodPressureRecord b JOIN b.patient p WHERE p.role = 'PATIENT' AND p.doctor.appUserId = :doctorId ORDER BY b.dateOfMeasurement DESC")
+    public List<BloodPressureRecord> findAllBloodPressureRecordsWithPatientNameByDoctorIdOrderedByDateOfMeasurementDesc(Long doctorId);
 }

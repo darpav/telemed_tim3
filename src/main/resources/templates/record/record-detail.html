@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Record Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="/patient/recordForm">Kreiraj novi zapis</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pregled mojih zapisa</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto align-items-center">
+                <li class="nav-item d-none d-lg-block">
+                    <span class="navbar-text me-3" th:text="${appUser.firstName + ' ' + appUser.lastName}">Ime i prezime</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- End navigation -->
+
+<!-- Container for the report -->
+<div class="container my-5">
+
+    <!-- Heading Section -->
+    <header class="text mb-4">
+        <h2>Detalji o Zapisu</h2>
+    </header>
+
+    <!-- Vertical Layout with Bootstrap Grid -->
+    <div class="row">
+
+        <!-- Date -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="fw-bold w-25">Datum objave:</span>
+                <span th:text="${record.getFormattedDateOfMeasurement()}">01.01.2023</span>
+            </div>
+        </div>
+
+        <!-- Systolic Blood Pressure -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="fw-bold w-25">Sistolički tlak:</span>
+                <span th:text="${record.systolicBloodPressure} + ' mmHg'">120 mmHg</span>
+            </div>
+        </div>
+
+        <!-- Diastolic Blood Pressure -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="fw-bold w-25">Diastolički tlak:</span>
+                <span th:text="${record.diastolicBloodPressure} + ' mmHg'">80 mmHg</span>
+            </div>
+        </div>
+
+        <!-- Heart Rate -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="fw-bold w-25">Srčni tlak:</span>
+                <span th:text="${record.heartRate} + ' bpm'">75 bpm</span>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="fw-bold w-25">Opis:</span>
+                <span th:text="${record.shortDescription}">opis...</span>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-12 mb-3">
+            <div class="d-flex">
+                <span class="w-25">
+                    <a class="btn btn-primary" href="/patient/dashboard">Natrag</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--    <a class="btn btn-primary" th:href="@{/patient/dashboard}">Natrag</a>-->
+<!--    <a class="btn btn-danger" th:href="@{/patient/deleteRecord?recordId={id}(id=${record.recordId})}">Obrisati zapis</a>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+</html>
