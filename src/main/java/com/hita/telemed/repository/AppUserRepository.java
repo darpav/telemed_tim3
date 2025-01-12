@@ -15,5 +15,9 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     @Query("SELECT p FROM AppUser p WHERE p.doctor.appUserId = :doctorId")
     List<AppUser> findAllPatientsByDoctorId(Long doctorId);
 
+    @Query("SELECT p FROM AppUser p WHERE p.doctor.appUserId = :doctorId ORDER BY p.lastName")
+    List<AppUser> findAllPatientsByDoctorIdOrderByLastName(Long doctorId);
 
+
+    AppUser findAppUserByAppUserEmail(String userEmail);
 }

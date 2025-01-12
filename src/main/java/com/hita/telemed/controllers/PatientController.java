@@ -33,6 +33,9 @@ public class PatientController {
         List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(patient.getAppUserId());
         model.addAttribute("records", records);
         model.addAttribute("appUser", patient);
+
+        System.out.println("pacijent: " + patient.toString());
+
         return "/patient/patient-dashboard";
     }
 
@@ -65,52 +68,5 @@ public class PatientController {
 
 
         return "redirect:/patient/dashboard";
-    }
-
-    // edit record
-    @GetMapping("/patient/record/edit")
-    public String getEditRecord(@RequestParam("recordId") Long recordId, Model model, HttpSession session) {
-        AppUser patient = (AppUser) session.getAttribute("appUser");
-        model.addAttribute("appUser", patient);
-        BloodPressureRecord record = bloodPressureRecordRepository.findById(recordId).get();
-        model.addAttribute("record", record);
-        return "/record/record-form-edit";
-    }
-
-    @GetMapping("/patient/record/update")
-    public String processEditRecord(@RequestParam("recordId") Long recordId,
-                                    @RequestParam("systolicBloodPressure") int systolicBloodPressure,
-                                    @RequestParam("diastolicBloodPressure") int diastolicBloodPressure,
-                                    @RequestParam("heartRate") int heartRate,
-                                    @RequestParam("shortDescription") String shortDescription) {
-
-        // find record by id
-        BloodPressureRecord recordToUpdate = bloodPressureRecordRepository.findById(recordId).get();
-        recordToUpdate.setSystolicBloodPressure(systolicBloodPressure);
-        recordToUpdate.setDiastolicBloodPressure(diastolicBloodPressure);
-        recordToUpdate.setHeartRate(heartRate);
-        recordToUpdate.setShortDescription(shortDescription);
-
-        bloodPressureRecordRepository.save(recordToUpdate);
-
-        return "redirect:/patient/dashboard";
-    }
-
-    @GetMapping("/patient/record/delete")
-    public String deleteRecord(@RequestParam("recordId") Long recordId, HttpSession session) {
-        bloodPressureRecordRepository.deleteById(recordId);
-        return "redirect:/patient/dashboard";
-    }
-
-    @GetMapping("/patient/record/detail")
-    public String viewRecordDetails(@RequestParam("recordId") Long recordId, Model model, HttpSession session) {
-
-        // implement view detail
-        BloodPressureRecord record = bloodPressureRecordRepository.findById(recordId).get();
-        AppUser patient = (AppUser) session.getAttribute("appUser");
-        model.addAttribute("record", record);
-        model.addAttribute("appUser", patient);
-
-        return "/record/record-detail";
     }
 }

@@ -26,40 +26,44 @@ public class DoctorController {
     public String getDoctorDashboard(Model model, HttpSession session) {
         AppUser doctor = (AppUser) session.getAttribute("appUser");
 
-        // find all patients by doctor id
-        //List<AppUser> patients = appUserRepository.findAllPatientsByDoctorId(doctor.getAppUserId());
-        //List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(doctor.getAppUserId());
-        //List<BloodPressureRecord> records =
-
-        //model.addAttribute("records", records);
+        List<BloodPressureRecord> records = bloodPressureRecordRepository.findSomething(doctor.getAppUserId());
 
         model.addAttribute("appUser", doctor);
-
+        model.addAttribute("records", records);
         return "/doctor/doctor-dashboard";
     }
 
     @GetMapping("/doctor/patient/new")
-    public String createPatient(Model model, HttpSession session) {
+    public String createPatient(@RequestParam(value = "msg", required = false) String msg, Model model, HttpSession session) {
         AppUser doctor = (AppUser) session.getAttribute("appUser");
+        model.addAttribute("msg", msg);
         model.addAttribute("appUser", doctor);
-        return "/patient/patient-form";
+        return "/doctor/doctor-patient-form";
     }
 
     @GetMapping("/doctor/patient/save")
     public String processPatientForm(@RequestParam("firstName") String firstName,
                               @RequestParam("lastName") String lastName,
-                              @RequestParam("useremail") String useremail,
-                              @RequestParam("userpassword") String userpassword, HttpSession session) {
+                              @RequestParam("userEmail") String userEmail,
+                              @RequestParam("userPassword") String userPassword, HttpSession session) {
 
         AppUser doctor = (AppUser) session.getAttribute("appUser");
+
+        AppUser user = appUserRepository.findAppUserByAppUserEmail(userEmail);
+        if(user != null) {
+            return "redirect:/doctor/patient/new?msg=" + "Email vec postoji";
+        }
         //novi pacijent
         AppUser patient = new AppUser();
         patient.setFirstName(firstName);
         patient.setLastName(lastName);
-        patient.setAppUserEmail(useremail);
-        patient.setAppUserPassword(userpassword);
+        patient.setAppUserEmail(userEmail);
+        patient.setAppUserPassword(userPassword);
         patient.setRole("PATIENT");
         patient.setDoctor(doctor);
+
+        // if email exists redirect to form
+
         appUserRepository.save(patient);
 
         return "redirect:/doctor/dashboard";
@@ -68,8 +72,12 @@ public class DoctorController {
     @GetMapping("/doctor/patient/list")
     public String getPatientsByDoctorId(Model model, HttpSession session) {
         AppUser doctor = (AppUser) session.getAttribute("appUser");
+
+        List<AppUser> patients = appUserRepository.findAllPatientsByDoctorIdOrderByLastName(doctor.getAppUserId());
+
         model.addAttribute("appUser", doctor);
-        return "/patient/patient-list";
+        model.addAttribute("patients", patients);
+        return "/doctor/doctor-patient-list";
     }
 
     @GetMapping("/doctor/patient/records")
@@ -85,17 +93,4 @@ public class DoctorController {
         return "/patient/patient-records";
     }
 
-    @GetMapping("/doctor/patient/list/all")
-    public String getAllPatients(){
-        // popis svih pacijenata
-        return "/patient/patient-list";
-    }
-
-    public String editPatient() {
-        return "/patient_form";
-    }
-
-    public String deletePatient() {
-        return "redirect:/doctor/dashboard";
-    }
 }

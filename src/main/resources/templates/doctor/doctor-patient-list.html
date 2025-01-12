@@ -40,12 +40,11 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/doctor/patient/new">Unesi novog korisnika</a>
+                    <a class="nav-link" href="/doctor/pacient/new">Unesi novog korisnika</a>
                 </li>
 
-
                 <li class="nav-item">
-                    <a class="nav-link" href="/doctor/patient/list">Lista Pacijenata</a>
+                    <a class="nav-link" href="/doctor/pacient/list">Lista Pacijenata</a>
                 </li>
 
             </ul>
@@ -74,26 +73,24 @@
         <div class="col-lg-12 d-none d-lg-block">
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <h5>Pacijenti i njihovi podaci o zadnjem mjerenju krvnog tlaka</h5>
+                    <h5>Popis pacijenata</h5>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Pacijent</th>
-                            <th>Datum mjerenja</th>
-                            <th>Krvni tlak (mmHg)</th>
-                            <th>Otkucaji srca (bpm)</th>
-                            <th>Kratki opis</th>
+                            <th>Id</th>
+                            <th>Prezime</th>
+                            <th>Ime</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="record : ${records}">
-                            <td th:text="${record.patient.firstName} + ' ' + ${record.patient.lastName}">Ime i prezime</td>
-                            <td th:text="${record.getFormattedDateOfMeasurement()}">01/10/2025</td>
-                            <td th:text="${record.systolicBloodPressure} + ' / ' + ${record.diastolicBloodPressure}">120/80</td>
-                            <td th:text="${record.heartRate}">75</td>
-                            <td th:text="${record.shortDescription}">opis...</td>
+                        <tr th:each="patient, itrStat : ${patients}">
+                            <td th:text="${itrStat.index + 1}">1</td>
+                            <td th:text="${patient.lastName}">Prezime</td>
+                            <td th:text="${patient.firstName}">Ime</td>
+                            <td> <a href="/doctor/patient/records?patientId=" th:text="${patient.appUserId}">Detalji </a></td>
                         </tr>
                         </tbody>
                     </table>
@@ -104,16 +101,14 @@
 
         <!-- Card Small Screen -->
         <div class="col-12 d-lg-none">
-            <div th:each="record : ${records}">
+            <div th:each="patient, itrStat : ${patientss}">
                 <div class="card mb-3">
                     <div class="card-header bg-success text-white">
-                        <h5>Pacijent : <span th:text="${record.patient.firstName} + ' ' + ${record.patient.lastName}">Ime i prezime</span></h5>
+                        <h5>Id : <span th:text="${itrStat.index + 1}">1</span></h5>
                     </div>
                     <div class="card-body">
-                        <p><strong>Datum mjerenja : </strong> <span th:text="${record.getFormattedDateOfMeasurement()}">01/10/2025</span></p>
-                        <p><strong>Krvni tlak : </strong> <span th:text="${record.systolicBloodPressure + ' / ' + record.diastolicBloodPressure + ' mmHg'}"> 120/80 mmHg </span></p>
-                        <p><strong>Otkucaji srca : </strong> <span th:text="${record.heartRate + ' bpm'}"> 78 bpm </span></p>
-                        <p><strong>Kratki opis : </strong> <span th:text="${record.shortDescription}">opis...</span> </p>
+                        <p><strong>Prezime : </strong> <span th:text="${patient.lastName}">Prezime</span></p>
+                        <p><strong>Ime : </strong> <span th:text="${patient.firstName}">Ime</span></p>
                     </div>
                 </div>
             </div>
