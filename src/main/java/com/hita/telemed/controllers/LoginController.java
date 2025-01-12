@@ -35,9 +35,9 @@ public class LoginController {
     }
 
     @GetMapping("/login/user")
-    public String processLoginUser(@RequestParam("useremail") String useremail, @RequestParam("userpassword") String userpassword, HttpSession session) {
+    public String processLoginUser(@RequestParam("userEmail") String userEmail, @RequestParam("userPassword") String userPassword, HttpSession session) {
 
-        AppUser appUser = appUserRepository.findAppUserByAppUserEmailAndAppUserPassword(useremail, userpassword);
+        AppUser appUser = appUserRepository.findAppUserByAppUserEmailAndAppUserPassword(userEmail, userPassword);
 
         if(appUser != null) {
             session.setAttribute("appUser", appUser);
@@ -53,10 +53,8 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logoutUser(HttpSession session) {
-        if(session.getAttribute("doctor") != null) {
-            session.removeAttribute("doctor");
-        } else if (session.getAttribute("patient") != null) {
-            session.removeAttribute("patient");
+        if(session.getAttribute("appUser") != null) {
+            session.removeAttribute("appUser");
         }
         session.invalidate();
         return "redirect:/login";

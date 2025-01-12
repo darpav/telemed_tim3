@@ -70,7 +70,7 @@ public class PatientController {
     // edit record
     @GetMapping("/patient/record/edit")
     public String getEditRecord(@RequestParam("recordId") Long recordId, Model model, HttpSession session) {
-        AppUser patient = (AppUser) session.getAttribute("patient");
+        AppUser patient = (AppUser) session.getAttribute("appUser");
         model.addAttribute("appUser", patient);
         BloodPressureRecord record = bloodPressureRecordRepository.findById(recordId).get();
         model.addAttribute("record", record);

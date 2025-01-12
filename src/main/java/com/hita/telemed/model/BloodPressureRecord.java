@@ -98,7 +98,7 @@ public class BloodPressureRecord {
 
 
     public String getFormattedDateOfMeasurement() {
-        return dateOfMeasurement.format(DateTimeFormatter.ofPattern("dd.MM.yyyy."));
+        return dateOfMeasurement.format(DateTimeFormatter.ofPattern("dd. MM. yyyy."));
     }
 
     @Override

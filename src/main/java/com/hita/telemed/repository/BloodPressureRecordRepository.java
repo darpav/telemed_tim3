@@ -19,4 +19,5 @@ public interface BloodPressureRecordRepository extends JpaRepository<BloodPressu
 
     @Query("SELECT b FROM BloodPressureRecord b JOIN b.patient p WHERE p.role = 'PATIENT' AND p.doctor.appUserId = :doctorId ORDER BY b.dateOfMeasurement DESC")
     public List<BloodPressureRecord> findAllBloodPressureRecordsWithPatientNameByDoctorIdOrderedByDateOfMeasurementDesc(Long doctorId);
+
 }

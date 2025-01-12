@@ -26,8 +26,13 @@ public class DoctorController {
     public String getDoctorDashboard(Model model, HttpSession session) {
         AppUser doctor = (AppUser) session.getAttribute("appUser");
 
-        List<BloodPressureRecord> records = bloodPressureRecordRepository.findAllBloodPressureRecordsWithPatientNameByDoctorIdOrderedByDateOfMeasurementDesc(doctor.getAppUserId());
-        model.addAttribute("records", records);
+        // find all patients by doctor id
+        //List<AppUser> patients = appUserRepository.findAllPatientsByDoctorId(doctor.getAppUserId());
+        //List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(doctor.getAppUserId());
+        //List<BloodPressureRecord> records =
+
+        //model.addAttribute("records", records);
+
         model.addAttribute("appUser", doctor);
 
         return "/doctor/doctor-dashboard";

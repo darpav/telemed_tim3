@@ -7,9 +7,9 @@ INSERT INTO app_user (
     doctor_id
 )
 VALUES
-('Doc', 'Uno', 'd@t.c', 'd', 'DOCTOR', NULL),
+('Doc', 'Uno', 'docuno@telemed.com', 'docuno', 'DOCTOR', NULL),
 ('Duje', 'Doc', 'docduje@telemed.com', 'docduje', 'DOCTOR', NULL),
-('Pero', 'Peric', 'p@g.c', 'p', 'PATIENT', 1),
+('Pero', 'Peric', 'peroperic@gmail.com', 'peroperic', 'PATIENT', 1),
 ('Gogo', 'Roschanu', 'gogoroschanu@gmail.com', 'gogoroschanu', 'PATIENT', 1),
 ('Ana', 'Anic', 'anaanic@gmail.com', 'anaanic', 'PATIENT', 2);
 
