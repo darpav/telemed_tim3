@@ -87,7 +87,9 @@ public class DoctorController {
 
         AppUser doctor = (AppUser) session.getAttribute("appUser");
         AppUser patient = appUserRepository.findById(patientId).get();
-        List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserId(patientId);
+        //List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserId(patientId);
+
+        List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDescRecordIdDesc(patientId);
 
         model.addAttribute("appUser", doctor);
         model.addAttribute("patient", patient);
