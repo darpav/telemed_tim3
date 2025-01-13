@@ -23,6 +23,11 @@ public class LoginController {
         return "/login";
     }
 
+    @GetMapping("/")
+    public String getRootLogin(){
+        return "/login";
+    }
+
     @GetMapping("/login/user")
     public String processLoginUser(@RequestParam("userEmail") String userEmail, @RequestParam("userPassword") String userPassword, HttpSession session) {
 
