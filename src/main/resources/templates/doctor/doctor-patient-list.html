@@ -40,11 +40,11 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/doctor/pacient/new">Unesi novog korisnika</a>
+                    <a class="nav-link" href="/doctor/patient/new">Unesi novog korisnika</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/doctor/pacient/list">Lista Pacijenata</a>
+                    <a class="nav-link" href="/doctor/patient/list">Lista pacijenata</a>
                 </li>
 
             </ul>
@@ -90,7 +90,7 @@
                             <td th:text="${itrStat.index + 1}">1</td>
                             <td th:text="${patient.lastName}">Prezime</td>
                             <td th:text="${patient.firstName}">Ime</td>
-                            <td> <a href="/doctor/patient/records?patientId=" th:text="${patient.appUserId}">Detalji </a></td>
+                            <td> <a th:href="@{'/doctor/patient/records?patientId=' + ${patient.appUserId}}"><i class="bi bi-journal-text"></i></a></td>
                         </tr>
                         </tbody>
                     </table>

@@ -2,7 +2,6 @@ package com.hita.telemed.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 
 @Entity
 @Table(name = "app_user")
@@ -62,6 +61,7 @@ public class AppUser {
         this.lastName = lastName;
     }
 
+
     public String getAppUserEmail() {
         return appUserEmail;
     }
@@ -94,14 +94,6 @@ public class AppUser {
         this.doctor = doctor;
     }
 
-    //
-//    public List<BloodPressureRecord> getBloodPressureRecords() {
-//        return bloodPressureRecords;
-//    }
-//
-//    public void setBloodPressureRecords(List<BloodPressureRecord> bloodPressureRecords) {
-//        this.bloodPressureRecords = bloodPressureRecords;
-//    }
 
 
     @Override

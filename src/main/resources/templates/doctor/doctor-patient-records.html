@@ -45,7 +45,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/doctor/patient/list">Lista Pacijenata</a>
+                    <a class="nav-link" href="/doctor/patient/list">Lista pacijenata</a>
                 </li>
 
             </ul>
@@ -74,13 +74,13 @@
         <div class="col-lg-12 d-none d-lg-block">
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <h5>Pacijenti i njihovi podaci o zadnjem mjerenju krvnog tlaka</h5>
+                    <h5>Povijest mjerenja krvnog tlaka</h5>
+                    <h6>Pacijent : <span th:text="${patient.firstName} + ' ' + ${patient.lastName}">Ime i Prezime</span></h6>
                 </div>
                 <div class="card-body">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Pacijent</th>
                             <th>Datum mjerenja</th>
                             <th>Krvni tlak (mmHg)</th>
                             <th>Otkucaji srca (bpm)</th>
@@ -89,7 +89,6 @@
                         </thead>
                         <tbody>
                         <tr th:each="record : ${records}">
-                            <td th:text="${record.patient.firstName} + ' ' + ${record.patient.lastName}">Ime i prezime</td>
                             <td th:text="${record.getFormattedDateOfMeasurement()}">01/10/2025</td>
                             <td th:text="${record.systolicBloodPressure} + ' / ' + ${record.diastolicBloodPressure}">120/80</td>
                             <td th:text="${record.heartRate}">75</td>
@@ -104,13 +103,13 @@
 
         <!-- Card Small Screen -->
         <div class="col-12 d-lg-none">
+            <h5>Pacijent : <span th:text="${patient.firstName} + ' ' + ${patient.lastName}">Ime i prezime</span></h5>
             <div th:each="record : ${records}">
                 <div class="card mb-3">
                     <div class="card-header bg-success text-white">
-                        <h5>Pacijent : <span th:text="${record.patient.firstName} + ' ' + ${record.patient.lastName}">Ime i prezime</span></h5>
+                        <h5>Datum mjerenja : <span th:text="${record.getFormattedDateOfMeasurement()}">01/10/2025</span></h5>
                     </div>
                     <div class="card-body">
-                        <p><strong>Datum mjerenja : </strong> <span th:text="${record.getFormattedDateOfMeasurement()}">01/10/2025</span></p>
                         <p><strong>Krvni tlak : </strong> <span th:text="${record.systolicBloodPressure + ' / ' + record.diastolicBloodPressure + ' mmHg'}"> 120/80 mmHg </span></p>
                         <p><strong>Otkucaji srca : </strong> <span th:text="${record.heartRate + ' bpm'}"> 78 bpm </span></p>
                         <p><strong>Kratki opis : </strong> <span th:text="${record.shortDescription}">opis...</span> </p>

@@ -2,6 +2,8 @@ package com.hita.telemed.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +29,7 @@ public class BloodPressureRecord {
     private String shortDescription;
 
     @Column(name = "date_of_measurement")
-    private LocalDateTime dateOfMeasurement;
+    private Timestamp dateOfMeasurement;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "app_user_id")
@@ -88,17 +90,18 @@ public class BloodPressureRecord {
         this.patient = patient;
     }
 
-    public LocalDateTime getDateOfMeasurement() {
+    public Timestamp getDateOfMeasurement() {
         return dateOfMeasurement;
     }
 
-    public void setDateOfMeasurement(LocalDateTime dateOfMeasurement) {
+    public void setDateOfMeasurement(Timestamp dateOfMeasurement) {
         this.dateOfMeasurement = dateOfMeasurement;
     }
 
 
     public String getFormattedDateOfMeasurement() {
-        return dateOfMeasurement.format(DateTimeFormatter.ofPattern("dd. MM. yyyy."));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd. MM. yyyy.");
+        return formatter.format(dateOfMeasurement);
     }
 
     @Override

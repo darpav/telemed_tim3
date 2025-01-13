@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,7 +31,7 @@ public class PatientController {
     @GetMapping("/patient/dashboard")
     public String getPatientDashboard(Model model, HttpSession session) {
         AppUser patient = (AppUser) session.getAttribute("appUser");
-        List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(patient.getAppUserId());
+        List<BloodPressureRecord> records = bloodPressureRecordRepository.findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDescRecordIdDesc(patient.getAppUserId());
         model.addAttribute("records", records);
         model.addAttribute("appUser", patient);
 
@@ -61,7 +62,7 @@ public class PatientController {
         AppUser patient = (AppUser) session.getAttribute("appUser");
         bloodPressureRecord.setPatient(patient);
         LocalDateTime dt = dateOfMeasurement.atStartOfDay();
-        bloodPressureRecord.setDateOfMeasurement(dt);
+        bloodPressureRecord.setDateOfMeasurement(Timestamp.valueOf(dt));
 
         // save record
         bloodPressureRecordRepository.save(bloodPressureRecord);

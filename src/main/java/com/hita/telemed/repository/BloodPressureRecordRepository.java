@@ -15,7 +15,7 @@ public interface BloodPressureRecordRepository extends JpaRepository<BloodPressu
 
     public List<BloodPressureRecord> findBloodPressureRecordsByPatient_AppUserId(Long patientId);
 
-    public List<BloodPressureRecord> findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDesc(Long patientId);
+    public List<BloodPressureRecord> findBloodPressureRecordsByPatient_AppUserIdOrderByDateOfMeasurementDescRecordIdDesc(Long patientId);
 
     @Query("SELECT b FROM BloodPressureRecord b JOIN b.patient p WHERE p.role = 'PATIENT' AND p.doctor.appUserId = :doctorId ORDER BY b.dateOfMeasurement DESC")
     public List<BloodPressureRecord> findAllBloodPressureRecordsWithPatientNameByDoctorIdOrderedByDateOfMeasurementDesc(Long doctorId);
@@ -26,7 +26,8 @@ public interface BloodPressureRecordRepository extends JpaRepository<BloodPressu
     public BloodPressureRecord findBloodPressureRecordByPatient_AppUserIdAndLAstDate(Long appUserId);
 
     @Query("SELECT b FROM BloodPressureRecord b JOIN b.patient p WHERE p.role = 'PATIENT' AND p.doctor.appUserId = :doctorId"
-            + " AND b.dateOfMeasurement = (SELECT MAX(bpr2.dateOfMeasurement) FROM BloodPressureRecord bpr2 WHERE bpr2.patient.appUserId = p.appUserId)")
-    public List<BloodPressureRecord> findSomething(Long doctorId);
+            + " AND b.recordId = (SELECT MAX(bpr2.recordId) FROM BloodPressureRecord bpr2 WHERE bpr2.patient.appUserId = p.appUserId)"
+            + " ORDER BY b.dateOfMeasurement DESC")
+    public List<BloodPressureRecord> findPatientsWithLastRecordByDoctorId(Long doctorId);
 
 }

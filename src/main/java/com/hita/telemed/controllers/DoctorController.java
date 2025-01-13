@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,7 +28,7 @@ public class DoctorController {
     public String getDoctorDashboard(Model model, HttpSession session) {
         AppUser doctor = (AppUser) session.getAttribute("appUser");
 
-        List<BloodPressureRecord> records = bloodPressureRecordRepository.findSomething(doctor.getAppUserId());
+        List<BloodPressureRecord> records = bloodPressureRecordRepository.findPatientsWithLastRecordByDoctorId(doctor.getAppUserId());
 
         model.addAttribute("appUser", doctor);
         model.addAttribute("records", records);
@@ -90,7 +92,7 @@ public class DoctorController {
         model.addAttribute("appUser", doctor);
         model.addAttribute("patient", patient);
         model.addAttribute("records", records);
-        return "/patient/patient-records";
+        return "/doctor/doctor-patient-records";
     }
 
 }
