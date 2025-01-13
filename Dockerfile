@@ -4,14 +4,18 @@ FROM openjdk:17-jdk-slim AS build
 # Set the working directory
 WORKDIR /app
 
-# Copy the build.gradle and settings.gradle files (if any)
-COPY build.gradle settings.gradle ./
+# Copy the Gradle wrapper and Gradle files
+COPY gradlew gradlew.bat ./
+COPY gradle gradle/
 
-# Copy Gradle wrapper files
-COPY gradle gradle
+# Copy the build.gradle and settings.gradle files
+COPY build.gradle settings.gradle ./
 
 # Copy the source code into the container
 COPY src src
+
+# Ensure gradlew is executable
+RUN chmod +x gradlew
 
 # Run Gradle build to create the .jar file
 RUN ./gradlew build --no-daemon
