@@ -21,16 +21,22 @@
 # ENTRYPOINT ["java","-jar","/app.jar"]
 # EXPOSE 8080
 # Stage 1: Build the application with Gradle
-FROM gradle:7.5-jdk19 AS build
+# Stage 1: Build the application with Gradle Wrapper
+FROM openjdk:19-jdk AS build
 WORKDIR /app
 
-# Copy build files
+# Copy Gradle Wrapper files and build files
+COPY gradlew .
+COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 
-# Build the application
-RUN gradle build -x test
+# Set execution permission for the Gradle wrapper
+RUN chmod +x ./gradlew
+
+# Build the application (skip tests)
+RUN ./gradlew build -x test
 
 # Stage 2: Create the final Docker image using OpenJDK 19
 FROM openjdk:19-jdk
@@ -40,3 +46,4 @@ VOLUME /tmp
 COPY --from=build /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 EXPOSE 8080
+
