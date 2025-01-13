@@ -1,49 +1,32 @@
-# # Importing JDK and copying required files
-# FROM openjdk:19-jdk AS build
-# WORKDIR /app
-# COPY pom.xml .
-# COPY src src
-#
-# # Copy Maven wrapper
-# COPY mvnw .
-# COPY .mvn .mvn
-#
-# # Set execution permission for the Maven wrapper
-# RUN chmod +x ./mvnw
-# RUN ./mvnw clean package -DskipTests
-#
-# # Stage 2: Create the final Docker image using OpenJDK 19
-# FROM openjdk:19-jdk
-# VOLUME /tmp
-#
-# # Copy the JAR from the build stage
-# COPY --from=build /app/target/*.jar app.jar
-# ENTRYPOINT ["java","-jar","/app.jar"]
-# EXPOSE 8080
-# Stage 1: Build the application with Gradle
-# Stage 1: Build the application with Gradle Wrapper
-FROM openjdk:19-jdk AS build
+# Use the official OpenJDK base image from Docker Hub
+FROM openjdk:17-jdk-slim AS build
+
+# Set the working directory
 WORKDIR /app
 
-# Copy Gradle Wrapper files and build files
-COPY gradlew .
+# Copy the build.gradle and settings.gradle files (if any)
+COPY build.gradle settings.gradle ./
+
+# Copy Gradle wrapper files
 COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
+
+# Copy the source code into the container
 COPY src src
 
-# Set execution permission for the Gradle wrapper
-RUN chmod +x ./gradlew
+# Run Gradle build to create the .jar file
+RUN ./gradlew build --no-daemon
 
-# Build the application (skip tests)
-RUN ./gradlew build -x test
+# Stage 2: Running the application
+FROM openjdk:17-jdk-slim
 
-# Stage 2: Create the final Docker image using OpenJDK 19
-FROM openjdk:19-jdk
-VOLUME /tmp
+# Set the working directory
+WORKDIR /app
 
-# Copy the JAR from the build stage
+# Copy the .jar file from the build stage
 COPY --from=build /app/build/libs/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+# Expose the port that your Spring Boot app will run on
 EXPOSE 8080
 
+# Run the Spring Boot application
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
