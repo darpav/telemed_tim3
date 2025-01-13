@@ -23,7 +23,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Step 8: Copy the built jar file from the build stage
-COPY --from=build /app/build/libs/your-app-name.jar app.jar
+COPY --from=build /app/build/libs/telemed-0.0.1-SNAPSHOT.jar app.jar
 
 # Step 9: Expose the port your application will run on
 EXPOSE 8080
