@@ -20,12 +20,12 @@ public class LoginController {
     @GetMapping("/login")
     public String getLogin(@RequestParam(value = "msg", required = false) String msg, Model model) {
         model.addAttribute("msg", msg);
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/")
     public String getRootLogin(){
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/login/user")
